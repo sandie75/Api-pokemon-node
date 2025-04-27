@@ -1,0 +1,14 @@
+{
+  "name": "node-pokemon-api",
+  "version": "1.0.0",
+  "description": "my first API rest.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Sandie Emonts",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
