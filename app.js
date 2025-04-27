@@ -8,10 +8,10 @@ const port = 3000
 Pour définir un point de terminaison:
 méthode de la requête: "get" qui prend 2 éléments en paramètre: le chemin de la requête (ici c'est simplement un slash, c'est à dire la route par défaut de notre api). Le 2è argument est une fonction dont le rôle est de fournir une réponse au client lorsque notre point de terminaison est appelé. Cette fct a elle-même deux argument en entrée: req et res.
 req: permet de récupérer un objet request qui correspond à la requête reçue en entrée de notre point de terminaison. Et res: la response, c à dire l'objet que l'on doit renvoyer depuis express à notre client. Ici, on utilise la méthode send de l'objet response pour retourner le message "Hello express" au client */
-app.get('/', (req,res)=> res.send('Hello, Express ! 👋'))
+app.get('/', (req,res)=> res.send('Hello, Express 4! 👋'))
 //On démarre l'api rest sur le port 3000 et on affiche un message de confirmation dans le port de commande grâce à la méthode listen fournie par express.
 app.listen(port, () => console.log(`Notre application node est démarrée sur : http://localhost:${port}`))
 
 //il ne reste plus qu'à démarrer l'api rest avec la commande "npm run start".
 //On vient d'envoyer une requête Get à notre api rest grâce au navigateur, et notre api rest écrite en node a retourné une réponse.
-// Si on change le message dans le code, il ne se passe rien sur la page. Pour rafraichir la page, il faudrait couper la commande npm start en faisant ctrl c, puis relancer npm start.
+// Si on change le message dans le code, il ne se passe rien sur la page. Pour rafraichir la page, il faudrait couper la commande npm start en faisant ctrl c, puis relancer npm start. Pour éviter de devoir relancer la commande sans arrêt pour rafraichir la page, il faut charger le package nodemon.
