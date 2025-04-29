@@ -2,14 +2,18 @@
 // On indique à Node d'aller chercher la dependance express dans le dossier node.module.
 const express = require('express')
 
+const { success } = require('./helper.js')
 let pokemons = require('./mock-pokemon')
+
 //On crée une instance d'un application express grâce à la méthode express.
 const app = express()
+
 //On définit une simple constante avec la valeur 3000. C'est le port sur lequel nous allons démarrer notre api rest.
 const port = 3000
+
 /*On définit notre premier point de terminaison ou endpoint. C'est le coeur d'express. 
 Pour définir un point de terminaison:
-méthode de la requête: "get" qui prend 2 éléments en paramètre: le chemin de la requête (ici c'est simplement un slash, c'est à dire la route par défaut de notre api). Le 2è argument est une fonction dont le rôle est de fournir une réponse au client lorsque notre point de terminaison est appelé. Cette fct a elle-même deux argument en entrée: req et res.
+méthode de la requête: "get" qui prend 2 éléments en paramètre: le chemin de la requête (ici c'est simplement un slash, c'est à dire la route par défaut de notre api). Le 2è argument est une fonction dont le rôle est de fournir une réponse au client lorsque notre point de terminaison est appelé. Cette fonction a elle-même deux argument en entrée: req et res.
 req: permet de récupérer un objet request qui correspond à la requête reçue en entrée de notre point de terminaison. Et res: la response, c à dire l'objet que l'on doit renvoyer depuis express à notre client. Ici, on utilise la méthode send de l'objet response pour retourner le message "Hello express" au client */
 
 app.get('/', (req,res)=> res.send('Hello again, Express ! 👋'))
@@ -24,11 +28,13 @@ app.get('/api/pokemons/:id', (req,res) => {
     //parseInt parce que l'id est une chaine de caractères qu'il faut transformer en nb pour remplir la condition id === id.
 
     const pokemon = pokemons.find(pokemon => pokemon.id === id)
-    res.send(`Vous avez demandé le pokémon ${pokemon.name}`)
+    const message = 'Un pokémon a bien été trouvé.'
+    res.json(success(message, pokemon))
 })
 
 app.get('/api/pokemons', (req,res)=> {
-     res.send(`Il y a ${pokemons.length} pokémons dans le pokédex.`)
+    const message = 'La liste des pokémons a bien été trouvée.'
+    res.json(success(message, pokemons))
 })
 
 app.listen(port, () => console.log(`Notre application node est démarrée sur : http://localhost:${port}`))
