@@ -17,11 +17,18 @@ app.get('/', (req,res)=> res.send('Hello again, Express ! 👋'))
 //On démarre l'api rest sur le port 3000 et on affiche un message de confirmation dans le port de commande grâce à la méthode listen fournie par express.
 
 //une api rest qui retourne les pokemons:
-app.get('/api/pokemons/:id',(req,res) => { 
+app.get('/api/pokemons/:id', (req,res) => { 
     //on récupère l'identifiant contenu dans l'url et on l'ajoute dans la route au dessus.
-    const id = req.params.id
+
+    const id = parseInt(req.params.id)
+    //parseInt parce que l'id est une chaine de caractères qu'il faut transformer en nb pour remplir la condition id === id.
+
     const pokemon = pokemons.find(pokemon => pokemon.id === id)
-    res.send(`Vous avez demandé le pokemon n°${id}`)
+    res.send(`Vous avez demandé le pokémon ${pokemon.name}`)
+})
+
+app.get('/api/pokemons', (req,res)=> {
+     res.send(`Il y a ${pokemons.length} pokémons dans le pokédex.`)
 })
 
 app.listen(port, () => console.log(`Notre application node est démarrée sur : http://localhost:${port}`))
