@@ -2,14 +2,18 @@
 // On indique à Node d'aller chercher la dependance express dans le dossier node.module.
 const express = require('express')
 
+const morgan = require('morgan')
+
 const { success } = require('./helper.js')
 let pokemons = require('./mock-pokemon')
 
 //On crée une instance d'un application express grâce à la méthode express.
 const app = express()
-
+  
 //On définit une simple constante avec la valeur 3000. C'est le port sur lequel nous allons démarrer notre api rest.
 const port = 3000
+
+app.use(morgan('dev'))
 
 /*On définit notre premier point de terminaison ou endpoint. C'est le coeur d'express. 
 Pour définir un point de terminaison:
