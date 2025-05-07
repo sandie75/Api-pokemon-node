@@ -4,7 +4,9 @@ const express = require('express')
 
 const morgan = require('morgan')
 
-const { success } = require('./helper.js')
+const favicon = require('serve-favicon')
+
+const { success, getUniqueId } = require('./helper.js')
 let pokemons = require('./mock-pokemon')
 
 //On crée une instance d'un application express grâce à la méthode express.
@@ -13,7 +15,9 @@ const app = express()
 //On définit une simple constante avec la valeur 3000. C'est le port sur lequel nous allons démarrer notre api rest.
 const port = 3000
 
-app.use(morgan('dev'))
+app
+    .use(favicon(__dirname + '/favicon.ico')) 
+    .use(morgan('dev'))
 
 /*On définit notre premier point de terminaison ou endpoint. C'est le coeur d'express. 
 Pour définir un point de terminaison:
@@ -39,6 +43,14 @@ app.get('/api/pokemons/:id', (req,res) => {
 app.get('/api/pokemons', (req,res)=> {
     const message = 'La liste des pokémons a bien été trouvée.'
     res.json(success(message, pokemons))
+})
+
+app.post('/api/pokemons', (req,res) => {
+    const id = getUniqueId(pokemons)
+    const pokemonCreated = {...req.body, ...{id:id, created: new Date()}}
+    pokemons.push(pokemonCreated)
+    const message = `Le pokémon ${pokemonCreated.name} a bien été créé.`
+    res.json(success(message, pokemonCreated))
 })
 
 app.listen(port, () => console.log(`Notre application node est démarrée sur : http://localhost:${port}`))
