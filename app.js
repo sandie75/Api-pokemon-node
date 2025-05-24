@@ -8,10 +8,12 @@ const favicon = require('serve-favicon')
 
 const bodyParser = require('body-parser')
 
-const { Sequelize } = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize')
 
 const { success, getUniqueId } = require('./helper.js')
 let pokemons = require('./mock-pokemon')
+
+const PokemonsModel = require('./src/models/pokemon')
 
 //On crée une instance d'un application express grâce à la méthode express.
 const app = express()
@@ -35,6 +37,11 @@ const sequelize = new Sequelize(
 sequelize.authenticate()
     .then(_=>console.log('La connectionn à la base de données a bien été établie.'))
     .catch(error =>console.error(`Impossible de se connecter à la base de données ${error}`))
+
+const pokemon = PokemonModel(Sequelize, DataTypes)
+
+sequelize.sync({force: true})
+    .then(_=> console.log('La base de données Pokedex a bien été synchronisée.'))
 
 app
     .use(favicon(__dirname + '/favicon.ico')) 
